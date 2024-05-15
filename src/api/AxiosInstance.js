@@ -11,9 +11,9 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = Cookies.get("token");
-    console.log("Bearer ", token); // Adjust key based on your storage strategy
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log("CONFIG TOKEN", config.headers.Authorization);
     }
     return config;
   },
