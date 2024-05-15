@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import "react-responsive-pagination/themes/minimal.css";
 import { Pagination } from "react-bootstrap";
 import { Dialog } from "primereact/dialog";
+import Cookies from "js-cookie";
 
 const SalesInvoiceList = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const SalesInvoiceList = () => {
         const response = await axiosInstance.get(
           `/api/invoice/list?search=${search}&page=${page}`
         );
+        console.log("INVOICE RESPONSE", response.data);
         if (response.status === 200) {
           setList(response.data.data);
           setTotalPage(response.data.lastPage); //lastPage is backend field Name
@@ -39,7 +41,7 @@ const SalesInvoiceList = () => {
           throw new Error("Request Failed");
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error:", error.response);
       }
     };
     searchData();

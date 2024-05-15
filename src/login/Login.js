@@ -1,5 +1,5 @@
 import { CButton, CCol, CForm, CFormInput, CRow } from "@coreui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../api/AxiosInstance";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
@@ -23,11 +23,7 @@ const Login = () => {
       email: email,
       password: password,
     });
-    Cookies.set(
-      "name",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiO…E4N30.HxwZlcB9S4iXvT6BqYG2N8zNy39q4rZvGpJS2SE3WAc",
-      { expires: 7, path: "" }
-    );
+    Cookies.set("token", loginData.data.data.token, { expires: 7, path: "" });
     Cookies.get("name", {
       domain: "https://crudinvoicepostgresql.onrender.com",
     });
@@ -54,6 +50,9 @@ const Login = () => {
     console.log(loginData.data);
   };
 
+  useEffect(() => {
+    Cookies.remove("token");
+  }, []);
   return (
     <>
       <h4 style={{ textAlign: "center", marginTop: "1px" }}>Login Form</h4>
